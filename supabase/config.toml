@@ -1,0 +1,12 @@
+project_id = "walkie"
+
+# The project signs user sessions with asymmetric keys (ES256). Supabase's
+# gateway-level "Verify JWT" only supports the legacy HS256 secret, so with it
+# enabled every call is rejected with UNAUTHORIZED_UNSUPPORTED_TOKEN_ALGORITHM
+# before the function runs.
+#
+# live-kit authenticates the caller itself (supabase.auth.getUser() in
+# index.ts) and returns 401 without a valid user session, so the gateway
+# check is redundant. Keep this false, or connecting to a room breaks.
+[functions.live-kit]
+verify_jwt = false
